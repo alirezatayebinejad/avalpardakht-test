@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { logout, isLoggedIn, getUserData } from '../../services/auth';
+import { logout } from '../../services/auth';
 import { Avatar } from '@mui/material';
+import { UserContext } from "../../contexts/userContext";
 
 const Header = () => {
-    const [auth, setAuth] = useState(isLoggedIn());
-    const [userData, setUserData] = useState(getUserData());
-    const handleLogout = () => {
-        logout();
-        setAuth(false);
-        setUserData(null);
-    };
+    const { isAuth, userData } = useContext(UserContext);
+
     return (
         <header>
             <nav>
@@ -29,7 +25,7 @@ const Header = () => {
                         <p>{userData.name}</p>
                     </div>
                 }
-                {auth ? <button onClick={handleLogout}>Logout</button> : <Link to="/login"><button>Login</button></Link>}
+                {isAuth ? <button onClick={() => logout()}>Logout</button> : <Link to="/login"><button>Login</button></Link>}
             </div>
         </header >
     );

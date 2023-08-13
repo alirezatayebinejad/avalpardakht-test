@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { login, logout, isLoggedIn, getUserData } from '../../services/auth';
+import React, { useContext, useState } from 'react';
+import { login, logout } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../../contexts/userContext";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const { isAuth, userData } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [auth, setAuth] = useState(isLoggedIn());
-  const [userData, setUserData] = useState(getUserData());
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,19 +23,14 @@ function LoginForm() {
       setError(error.message);
     }
   };
-  const handleLogout = () => {
-    logout();
-    setAuth(false);
-    setUserData(null);
-  };
 
-  if (auth)
+  if (isAuth)
     return (
       <div>
         <h3>You are already logged in as:</h3>
         <p>Email: {userData.email}</p>
         <p>Name: {userData.name}</p>
-        <button onClick={handleLogout}>Logout</button>
+        <button onClick={() => logout()}>Logout</button>
       </div>
     )
   return (
