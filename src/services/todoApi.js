@@ -9,7 +9,7 @@ async function addTodo(title, description, token) {
             description,
         }, {
             headers: {
-                Authorization: token,
+                Authorization: `Bearer ${token}`,
             },
         });
 
