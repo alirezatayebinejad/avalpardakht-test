@@ -5,7 +5,12 @@ import { Avatar } from '@mui/material';
 import { UserContext } from "../../contexts/userContext";
 
 const Header = () => {
-    const { isAuth, userData } = useContext(UserContext);
+    const { isAuth, userData, updateAuthStatus } = useContext(UserContext);
+
+    const logoutHandler = () => {
+        logout();
+        updateAuthStatus();
+    }
 
     return (
         <header>
@@ -25,7 +30,7 @@ const Header = () => {
                         <p>{userData.name}</p>
                     </div>
                 }
-                {isAuth ? <button onClick={() => logout()}>Logout</button> : <Link to="/login"><button>Login</button></Link>}
+                {isAuth ? <button onClick={logoutHandler}>Logout</button> : <Link to="/login"><button>Login</button></Link>}
             </div>
         </header >
     );

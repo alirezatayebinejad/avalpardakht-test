@@ -5,7 +5,7 @@ import { UserContext } from "../../contexts/userContext";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const { isAuth, userData } = useContext(UserContext);
+  const { isAuth, userData, updateAuthStatus } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -24,13 +24,17 @@ function LoginForm() {
     }
   };
 
+  const logoutHandler = () => {
+    logout();
+    updateAuthStatus();
+  }
   if (isAuth)
     return (
       <div>
         <h3>You are already logged in as:</h3>
         <p>Email: {userData.email}</p>
         <p>Name: {userData.name}</p>
-        <button onClick={() => logout()}>Logout</button>
+        <button onClick={() => logoutHandler()}>Logout</button>
       </div>
     )
   return (
