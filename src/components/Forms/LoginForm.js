@@ -19,6 +19,7 @@ function LoginForm() {
       setEmail('');
       setPassword('')
       navigate('/');
+      updateAuthStatus();
     } catch (error) {
       setError(error.message);
     }
