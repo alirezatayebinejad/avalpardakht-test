@@ -68,4 +68,4 @@ function logout() {
     document.cookie = `userData=;expires=${expirationDate.toUTCString()};path=/;`;
 }
 
-export { login, isLoggedIn, logout, getUserData };
+export { login, isLoggedIn, logout, getUserData, getAuthToken };

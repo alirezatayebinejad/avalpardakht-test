@@ -59,6 +59,7 @@ function LoginForm() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="true"
         />
       </div>
       <div>
