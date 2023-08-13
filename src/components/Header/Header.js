@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { logout, isLoggedIn, getUserData } from '../../services/auth';
 import { Avatar } from '@mui/material';
 
 const Header = () => {
-    const auth = isLoggedIn();
-    const userData = getUserData();
-
+    const [auth, setAuth] = useState(isLoggedIn());
+    const [userData, setUserData] = useState(getUserData());
+    const handleLogout = () => {
+        logout();
+        setAuth(false);
+        setUserData(null);
+    };
     return (
         <header>
             <nav>
@@ -25,7 +29,7 @@ const Header = () => {
                         <p>{userData.name}</p>
                     </div>
                 }
-                {auth ? <button onClick={() => logout}>Logout</button> : <Link to="/login"><button>Login</button></Link>}
+                {auth ? <button onClick={handleLogout}>Logout</button> : <Link to="/login"><button>Login</button></Link>}
             </div>
         </header >
     );

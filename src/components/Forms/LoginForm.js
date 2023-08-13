@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { login, logout, isLoggedIn } from '../../services/auth';
+import { login, logout, isLoggedIn, getUserData } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
@@ -7,6 +7,8 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [auth, setAuth] = useState(isLoggedIn());
+  const [userData, setUserData] = useState(getUserData());
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,14 +23,19 @@ function LoginForm() {
       setError(error.message);
     }
   };
+  const handleLogout = () => {
+    logout();
+    setAuth(false);
+    setUserData(null);
+  };
 
-
-  if (isLoggedIn())
+  if (auth)
     return (
       <div>
-        <h3>You are already logged in</h3>
-        <p>logout first</p>
-        <button onClick={() => logout()}>Logout</button>
+        <h3>You are already logged in as:</h3>
+        <p>Email: {userData.email}</p>
+        <p>Name: {userData.name}</p>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     )
   return (
