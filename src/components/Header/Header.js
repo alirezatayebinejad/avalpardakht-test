@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { logout, isLoggedIn, getUserData } from '../../services/auth';
+import { Avatar } from '@mui/material';
 
 const Header = () => {
+    const auth = isLoggedIn();
+    const userData = getUserData();
+
     return (
         <header>
             <nav>
@@ -12,10 +17,17 @@ const Header = () => {
                     <li><Link to="/todo/20">show Todo</Link></li>
                 </ul>
             </nav>
+
             <div>
-                <Link to="/login"><button>Login</button></Link>
+                {userData &&
+                    <div>
+                        <Avatar sx={{ bgcolor: "gray" }} alt={userData.name} src={userData.image}></Avatar>
+                        <p>{userData.name}</p>
+                    </div>
+                }
+                {auth ? <button onClick={() => logout}>Logout</button> : <Link to="/login"><button>Login</button></Link>}
             </div>
-        </header>
+        </header >
     );
 };
 

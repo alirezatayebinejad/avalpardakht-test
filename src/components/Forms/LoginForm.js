@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { login } from '../../services/auth';
+import { login, logout, isLoggedIn } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
@@ -22,6 +22,15 @@ function LoginForm() {
     }
   };
 
+
+  if (isLoggedIn())
+    return (
+      <div>
+        <h3>You are already logged in</h3>
+        <p>logout first</p>
+        <button onClick={() => logout()}>Logout</button>
+      </div>
+    )
   return (
     <form>
       {error && <div className="error">{error}</div>}
