@@ -16,7 +16,7 @@ const AddTodoForm = () => {
     })
 
     const handleAddTodo = async () => {
-        mutate({ title, description })
+        mutate({ todo: title, description })
     };
 
     return (

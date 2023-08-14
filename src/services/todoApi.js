@@ -4,10 +4,10 @@ import { getAuthToken } from "../services/auth";
 const userToken = getAuthToken();
 const BASE_URL = 'https://interview.aval.dev/api/todo-list';
 
-async function addTodo(title, description) {
+async function addTodo(todo, description) {
     try {
         const response = await axios.post(`${BASE_URL}/add`, {
-            todo: title,
+            todo,
             description,
         }, {
             headers: {
