@@ -7,16 +7,17 @@ const AddTodoForm = () => {
     const { authToken } = useContext(UserContext);
     const [todo, setTodo] = useState('');
     const [description, setDescription] = useState('');
+    console.log(description);
     const queryClient = useQueryClient();
     const { status, error, mutate } = useMutation({
-        mutationFn: addTodo,
+        mutationFn: () => addTodo(todo, description),
         onSuccess: newTodo => {
             queryClient.setQueriesData(["todos"], parseInt(newTodo.id), authToken)
         }
     })
 
     const handleAddTodo = async () => {
-        mutate({ todo, description })
+        mutate()
     };
 
     return (
