@@ -11,13 +11,14 @@ const AddTodoForm = () => {
     const { status, error, mutate } = useMutation({
         mutationFn: addTodo,
         onSuccess: newTodo => {
-            queryClient.setQueriesData(["todos"], newTodo.id, authToken);
+            queryClient.setQueriesData(["todos"], newTodo.id, authToken)
         }
-    });
+    })
 
-    const handleAddTodo = async (title, description) => {
-        mutate({ title, description, authToken }); // Pass the arguments correctly
+    const handleAddTodo = async () => {
+        mutate({ todo: title, description, token: authToken })
     };
+
     return (
         <div>
             <div>
