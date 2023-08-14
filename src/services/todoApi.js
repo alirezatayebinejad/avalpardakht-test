@@ -1,15 +1,17 @@
 import axios from 'axios';
+import { getAuthToken } from "../services/auth";
 
+const userToken = getAuthToken();
 const BASE_URL = 'https://interview.aval.dev/api/todo-list';
 
-async function addTodo(todo, description, token) {
+async function addTodo(todo, description) {
     try {
         const response = await axios.post(`${BASE_URL}/add`, {
             todo,
             description,
         }, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${userToken}`,
             },
         });
 
