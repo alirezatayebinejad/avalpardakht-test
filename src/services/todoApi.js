@@ -66,7 +66,7 @@ async function updateDoneStatus(todoId, done, token) {
     try {
         const response = await axios.patch(`${BASE_URL}/change-done/${todoId}`, { done }, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${userToken}`,
             },
         });
         return response.data;

@@ -1,22 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { useNavigate } from 'react-router-dom';
 import { updateDoneStatus } from '../../services/todoApi';
-import { UserContext } from '../../contexts/userContext';
 import styles from './TodoButtons.module.css';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const TodoButtons = ({ todo }) => {
-    const { authToken } = useContext(UserContext);
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const { status, error, mutate } = useMutation({
+        mutationFn: () => updateDoneStatus(todo.id, !todo.done),
+        onSuccess: () => {
+            queryClient.invalidateQueries('todos');
+        }
+    });
 
     const handleDoneBtn = async (e) => {
         e.stopPropagation();
-        try {
-            await updateDoneStatus(todo.id, !todo.done, authToken);
-        } catch (error) {
-            console.error('Error updating done status:', error);
-        }
+        mutate();
     };
 
     const handleEditBtn = (e) => {
@@ -26,7 +28,7 @@ const TodoButtons = ({ todo }) => {
 
     return (
         <div className={styles.todo_buttons}>
-            <button className={styles.todo_button} onClick={handleDoneBtn}><TaskAltIcon /></button>
+            <button disabled={status === "loading" ? true : false} className={styles.todo_button} onClick={handleDoneBtn}><TaskAltIcon /></button>
             <button className={styles.todo_button} onClick={handleEditBtn}><EditIcon /></button>
         </div>
     );
