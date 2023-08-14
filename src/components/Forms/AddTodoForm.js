@@ -7,12 +7,17 @@ const AddTodoForm = () => {
     const { authToken } = useContext(UserContext);
     const [todo, setTodo] = useState('');
     const [description, setDescription] = useState('');
-    console.log(description);
+    const [alert, setAlert] = useState(null)
     const queryClient = useQueryClient();
     const { status, error, mutate } = useMutation({
         mutationFn: () => addTodo(todo, description),
+        onMutate: () => {
+            setAlert('');
+        },
         onSuccess: () => {
-
+            setAlert("todo added to the list");
+            setTodo('')
+            setDescription("")
         }
     })
 
@@ -41,6 +46,7 @@ const AddTodoForm = () => {
             </div>
             <div>
                 <button onClick={handleAddTodo} disabled={status === "loading"}>Add Todo</button>
+                {alert && <span>{alert}</span>}
             </div>
         </div>
     );
