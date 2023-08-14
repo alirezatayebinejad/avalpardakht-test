@@ -4,15 +4,15 @@ import { UserContext } from '../../contexts/userContext';
 
 const EditTodoForm = ({ todo }) => {
     const { authToken } = useContext(UserContext);
-    const [title, setTitle] = useState(todo?.title);
-    const [description, setDescription] = useState(todo?.description);
+    const [title, setTitle] = useState(todo.todo || "");
+    const [description, setDescription] = useState(todo.description || "");
     const [isLoading, setIsLoading] = useState(false);
 
     const handleUpdateTodo = async () => {
         setIsLoading(true);
         try {
-            const updatedTodo = await updateTodo(todo?.id, title, description, authToken);
-            console.log('Todo updated:', updatedTodo);
+            await updateTodo(todo.id, title, description, authToken);
+
         } catch (error) {
             console.error('Error updating todo:', error);
             setIsLoading(false);

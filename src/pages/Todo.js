@@ -27,7 +27,7 @@ const Todo = () => {
     }, [todoId, authToken]);
 
     if (todo === "empty")
-        return (< h2 > this post does not exist</ h2>)
+        return (< p > this post does not exist</ p>)
     return (
         <div>
             <div>
