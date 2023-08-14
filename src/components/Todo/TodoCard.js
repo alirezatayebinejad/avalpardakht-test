@@ -12,7 +12,7 @@ function TodoCard({ todo }) {
     return (
         <div onClick={handleCardClick}>
             <div>
-                <h3>{todo.todo}</h3>
+                {todo.done === true ? <del><h3>{todo.todo}</h3></del> : <h3>{todo.todo}</h3>}
             </div>
             <div>
                 <TodoButtons todo={todo} />

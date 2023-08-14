@@ -60,4 +60,16 @@ async function showTodo(todoId, token) {
     }
 }
 
-export { addTodo, updateTodo, getTodos, showTodo };
+async function updateDoneStatus(todoId, done, token) {
+    try {
+        const response = await axios.patch(`${BASE_URL}/todo-list/change-done/${todoId}`, { done }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+export { addTodo, updateTodo, getTodos, showTodo, updateDoneStatus };

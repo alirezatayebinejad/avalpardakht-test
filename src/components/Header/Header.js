@@ -18,8 +18,6 @@ const Header = () => {
                 <ul>
                     <li><Link to="/">Todos</Link></li>
                     <li><Link to="/add">Add Todo</Link></li>
-                    <li><Link to="/edit/2">edit Todo</Link></li>
-                    <li><Link to="/todo/20">show Todo</Link></li>
                 </ul>
             </nav>
 

@@ -12,8 +12,7 @@ const AddTodoForm = () => {
         setIsLoading(true);
         try {
             console.log('getToken', authToken);
-            const newTodo = await addTodo(title, description, authToken);
-            console.log('New Todo:', newTodo);
+            await addTodo(title, description, authToken);
 
             setTitle('');
             setDescription('');

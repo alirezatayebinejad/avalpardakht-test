@@ -1,31 +1,36 @@
-import React from 'react'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import React, { useContext } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { useNavigate } from 'react-router-dom';
+import { updateDoneStatus } from '../../services/todoApi'; // Import the deleteTodo and updateDoneStatus functions from your todoApi.js
+import { UserContext } from '../../contexts/userContext';
 
 const TodoButtons = ({ todo }) => {
+    const { authToken } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const handleDoneBtn = (e) => {
+    const handleDoneBtn = async (e) => {
         e.stopPropagation();
-        //api update request
+        try {
+            await updateDoneStatus(todo.id, !todo.done, authToken);
+        } catch (error) {
+            console.error('Error updating done status:', error);
+        }
     };
+
     const handleEditBtn = (e) => {
         e.stopPropagation();
-        navigate(`/edit/${todo.id}`)
+        navigate(`/edit/${todo.id}`);
     };
-    const handleDeleteBtn = (e) => {
-        e.stopPropagation();
-        //api delete request
-    };
+
+
+
     return (
         <div>
-            <button onClick={(e) => handleDoneBtn(e)}><TaskAltIcon /></button>
-            <button onClick={(e) => handleEditBtn(e)}><EditIcon /></button>
-            <button onClick={(e) => handleDeleteBtn(e)}><DeleteOutlineIcon /></button>
+            <button onClick={handleDoneBtn}><TaskAltIcon /></button>
+            <button onClick={handleEditBtn}><EditIcon /></button>
         </div>
-    )
-}
+    );
+};
 
 export default TodoButtons;

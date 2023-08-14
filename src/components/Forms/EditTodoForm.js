@@ -17,6 +17,8 @@ const EditTodoForm = () => {
         const fetchTodo = async () => {
             try {
                 const todoInfo = await showTodo(todoId, authToken);
+                setTitle(todoInfo.todo)
+                setDescription(todoInfo.description)
                 setTodo(todoInfo);
             } catch (error) {
                 console.error('Error fetching todo:', error);
