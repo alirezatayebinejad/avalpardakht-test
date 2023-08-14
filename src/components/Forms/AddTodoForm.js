@@ -7,7 +7,6 @@ const AddTodoForm = () => {
     const { authToken } = useContext(UserContext);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const queryClient = useQueryClient();
     const { status, error, mutate } = useMutation({
         mutationFn: addTodo,
@@ -17,7 +16,7 @@ const AddTodoForm = () => {
     })
 
     const handleAddTodo = async () => {
-        mutate({ title, description, authToken })
+        mutate({ todo: title, description, authToken })
     };
 
     return (
@@ -40,7 +39,7 @@ const AddTodoForm = () => {
                 />
             </div>
             <div>
-                <button onClick={handleAddTodo} disabled={isLoading}>Add Todo</button>
+                <button onClick={handleAddTodo} disabled={status === "loading"}>Add Todo</button>
             </div>
         </div>
     );
