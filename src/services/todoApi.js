@@ -35,9 +35,13 @@ async function updateTodo(id, title, description, token) {
         throw error;
     }
 }
-async function getTodos() {
+async function getTodos(token) {
     try {
-        const response = await axios.get(`${BASE_URL}/todo-list/list`);
+        const response = await axios.get(`${BASE_URL}/todo-list/list`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.data;
     } catch (error) {
         throw error;

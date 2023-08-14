@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TodoCard from '../components/Todo/TodoCard';
 import { Link } from 'react-router-dom';
 import { getTodos } from '../services/todoApi'; // Import the API function
+import { UserContext } from '../contexts/userContext';
 
 function TodoList() {
+    const { authToken } = useContext(UserContext);
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
         const fetchTodos = async () => {
             try {
-                const fetchedTodos = await getTodos();
+                const fetchedTodos = await getTodos(authToken);
                 setTodos(fetchedTodos);
             } catch (error) {
                 console.error('Error fetching todos:', error);
