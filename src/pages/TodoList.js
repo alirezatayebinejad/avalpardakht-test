@@ -1,26 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import TodoCard from '../components/Todo/TodoCard';
 import { Link } from 'react-router-dom';
 import { getTodos } from '../services/todoApi'; // Import the API function
 import { UserContext } from '../contexts/userContext';
+import { useQuery } from '@tanstack/react-query';
 
 function TodoList() {
     const { authToken } = useContext(UserContext);
-    const [todos, setTodos] = useState([]);
+    const {
+        status,
+        error,
+        data: todos
+    } = useQuery({
+        queryKey: ["todos", authToken],
+        queryFn: () => getTodos(authToken),
+    })
 
-    useEffect(() => {
-        const fetchTodos = async () => {
-            try {
-                const fetchedTodos = await getTodos(authToken);
-                console.log(fetchedTodos);
-                setTodos(fetchedTodos);
-            } catch (error) {
-                console.error('Error fetching todos:', error);
-            }
-        };
-
-        fetchTodos();
-    }, [authToken]);
     const renderTodos = () => {
         const todoList = todos?.map(todo => (
             <TodoCard key={todo.id} todo={todo} />
@@ -28,6 +23,13 @@ function TodoList() {
         return todoList;
     }
 
+    if (status === 'loading') {
+        return <span>Loading...</span>
+    }
+
+    if (status === 'error') {
+        return <span>Error: {error.message}</span>
+    }
     return (
         <div>
             <div>
@@ -35,7 +37,7 @@ function TodoList() {
                 <Link to="/add"><button>Add New</button></Link>
             </div>
             <div>
-                {todos ? renderTodos() : "loading..."}
+                {renderTodos()}
             </div>
         </div>
     );

@@ -1,26 +1,23 @@
 import React, { useState, useContext } from 'react';
 import { addTodo } from '../../services/todoApi';
 import { UserContext } from '../../contexts/userContext';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const AddTodoForm = () => {
     const { authToken } = useContext(UserContext);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const queryClient = useQueryClient();
+    const { status, error, mutate } = useMutation({
+        mutationFn: addTodo,
+        onSuccess: newTodo => {
+            queryClient.setQueriesData(["todos"], newTodo.id, authToken)
+        }
+    })
 
     const handleAddTodo = async () => {
-        setIsLoading(true);
-        try {
-            console.log('getToken', authToken);
-            await addTodo(title, description, authToken);
-
-            setTitle('');
-            setDescription('');
-        } catch (error) {
-            console.error('Error adding todo:', error);
-            setIsLoading(false);
-        }
-        setIsLoading(false);
+        mutate({ title, description, authToken })
     };
 
     return (
