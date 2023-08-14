@@ -17,7 +17,8 @@ function TodoList() {
     })
 
     const renderTodos = () => {
-        const todoList = todos?.map(todo => (
+        let todoList = [];
+        todoList = todos?.map(todo => (
             <TodoCard key={todo.id} todo={todo} />
         ))
         return todoList;
