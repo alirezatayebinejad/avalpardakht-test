@@ -1,0 +1,15 @@
+.todo_buttons {
+	display: flex;
+	gap: 10px;
+}
+
+.todo_button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	transition: color 0.3s ease;
+}
+
+.todo_button:hover {
+	color: #3498db;
+}

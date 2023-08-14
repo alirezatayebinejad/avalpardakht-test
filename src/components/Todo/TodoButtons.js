@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { useNavigate } from 'react-router-dom';
-import { updateDoneStatus } from '../../services/todoApi'; // Import the deleteTodo and updateDoneStatus functions from your todoApi.js
+import { updateDoneStatus } from '../../services/todoApi';
 import { UserContext } from '../../contexts/userContext';
+import styles from './TodoButtons.module.css';
 
 const TodoButtons = ({ todo }) => {
     const { authToken } = useContext(UserContext);
@@ -23,12 +24,10 @@ const TodoButtons = ({ todo }) => {
         navigate(`/edit/${todo.id}`);
     };
 
-
-
     return (
-        <div>
-            <button onClick={handleDoneBtn}><TaskAltIcon /></button>
-            <button onClick={handleEditBtn}><EditIcon /></button>
+        <div className={styles.todo_buttons}>
+            <button className={styles.todo_button} onClick={handleDoneBtn}><TaskAltIcon /></button>
+            <button className={styles.todo_button} onClick={handleEditBtn}><EditIcon /></button>
         </div>
     );
 };

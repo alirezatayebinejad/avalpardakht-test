@@ -8,7 +8,9 @@ function App() {
   return (
     <div className="App">
       <Header />
-      {router}
+      <div className='contentWrapper'>
+        {router}
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import TodoButtons from '../components/Todo/TodoButtons';
 import { showTodo } from '../services/todoApi'; // Import the showTodo function
 import { UserContext } from '../contexts/userContext';
 import { useQuery } from '@tanstack/react-query';
+import styles from './Todo.module.css';
 
 const Todo = () => {
     const { authToken } = useContext(UserContext);
@@ -14,28 +15,23 @@ const Todo = () => {
     })
 
     if (status === 'loading') {
-        return <span>Loading...</span>
+        return <div className={styles.loading}>Loading...</div>
     }
 
     if (status === 'error') {
-        return <span>Error: {error.message}</span>
+        return <div className={styles.error}>Error: {error.message}</div>
     }
 
     return (
-        <div>
-            <div>
-                <div>
-                    <h1>{todo && todo?.todo}</h1>
-                    <div>
-                        <TodoButtons todo={todo} />
-                    </div>
-                </div>
-                <p>
-                    {todo && todo?.description}
-                </p>
-
+        <div className={styles.todo_container}>
+            <div className={styles.todo_header}>
+                <h1 className={styles.todo_title}>{todo && todo?.todo}</h1>
+                <TodoButtons todo={todo} />
             </div>
-        </div >
+            <p className={styles.todo_description}>
+                {todo && todo?.description}
+            </p>
+        </div>
     );
 };
 

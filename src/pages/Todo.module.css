@@ -1,0 +1,38 @@
+.todo_container {
+	max-width: 600px;
+	margin: 50px auto;
+	padding: 2rem;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo_header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.todo_title {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.todo_description {
+	font-size: 16px;
+	margin-top: 1rem;
+}
+
+.loading {
+	font-size: 18px;
+	text-align: center;
+	margin-top: 2rem;
+}
+
+.error {
+	color: #e74c3c;
+	font-size: 18px;
+	text-align: center;
+	margin-top: 2rem;
+}

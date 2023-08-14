@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { login, logout } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from "../../contexts/userContext";
+import { UserContext } from '../../contexts/userContext';
+import styles from './LoginForm.module.css';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function LoginForm() {
       await login(email, password);
       setError(null);
       setEmail('');
-      setPassword('')
+      setPassword('');
       navigate('/');
       updateAuthStatus();
     } catch (error) {
@@ -28,22 +29,30 @@ function LoginForm() {
   const logoutHandler = () => {
     logout();
     updateAuthStatus();
-  }
-  if (isAuth)
+  };
+
+  if (isAuth) {
     return (
-      <div>
+      <div className={styles.login_form}>
         <h3>You are already logged in as:</h3>
         <p>Email: {userData.email}</p>
         <p>Name: {userData.name}</p>
-        <button onClick={() => logoutHandler()}>Logout</button>
+        <button className={styles.button} onClick={logoutHandler}>
+          Logout
+        </button>
       </div>
-    )
+    );
+  }
+
   return (
-    <form>
-      {error && <div className="error">{error}</div>}
-      <div>
-        <label htmlFor="email">Email</label>
+    <form className={styles.login_form}>
+      {error && <div className={styles.error}>{error}</div>}
+      <div className={styles.form_group}>
+        <label className={styles.label} htmlFor="email">
+          Email
+        </label>
         <input
+          className={styles.input}
           id="email"
           type="email"
           placeholder="Email"
@@ -51,9 +60,12 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <div>
-        <label htmlFor="password">Password</label>
+      <div className={styles.form_group}>
+        <label className={styles.label} htmlFor="password">
+          Password
+        </label>
         <input
+          className={styles.input}
           id="password"
           type="password"
           placeholder="Password"
@@ -63,8 +75,11 @@ function LoginForm() {
         />
       </div>
       <div>
-        <button onClick={handleLogin}>Log In</button>
+        <button className={styles.button} onClick={handleLogin}>
+          Log In
+        </button>
       </div>
+      <h1 className="text-3xl font-bold underline">sdfsddf</h1>
     </form>
   );
 }
