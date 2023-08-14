@@ -11,8 +11,8 @@ const AddTodoForm = () => {
     const queryClient = useQueryClient();
     const { status, error, mutate } = useMutation({
         mutationFn: () => addTodo(todo, description),
-        onSuccess: newTodo => {
-            queryClient.setQueriesData(["todos"], parseInt(newTodo.id), authToken)
+        onSuccess: () => {
+
         }
     })
 
