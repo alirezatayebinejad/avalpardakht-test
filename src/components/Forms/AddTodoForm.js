@@ -6,8 +6,10 @@ const AddTodoForm = () => {
     const { authToken } = useContext(UserContext);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    console.log(authToken);
+    const [isLoading, setIsLoading] = useState(false);
+
     const handleAddTodo = async () => {
+        setIsLoading(true);
         try {
             console.log('getToken', authToken);
             const newTodo = await addTodo(title, description, authToken);
@@ -17,7 +19,9 @@ const AddTodoForm = () => {
             setDescription('');
         } catch (error) {
             console.error('Error adding todo:', error);
+            setIsLoading(false);
         }
+        setIsLoading(false);
     };
 
     return (
@@ -40,7 +44,7 @@ const AddTodoForm = () => {
                 />
             </div>
             <div>
-                <button onClick={handleAddTodo}>Add Todo</button>
+                <button onClick={handleAddTodo} disabled={isLoading}>Add Todo</button>
             </div>
         </div>
     );

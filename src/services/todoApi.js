@@ -19,4 +19,28 @@ async function addTodo(title, description, token) {
     }
 }
 
-export { addTodo };
+async function updateTodo(id, title, description, token) {
+    try {
+        const response = await axios.put(`${BASE_URL}/todo-list/update/${id}`, {
+            todo: title,
+            description,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+async function getTodos() {
+    try {
+        const response = await axios.get(`${BASE_URL}/todo-list/list`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+export { addTodo, updateTodo, getTodos };
