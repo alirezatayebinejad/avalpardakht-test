@@ -64,6 +64,7 @@ async function showTodo(todoId, token) {
 
 async function updateDoneStatus(todoId, done, token) {
     try {
+        done === false ? done = 0 : done = true;
         const response = await axios.patch(`${BASE_URL}/change-done/${todoId}`, { done }, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
