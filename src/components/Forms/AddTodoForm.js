@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const AddTodoForm = () => {
     const { authToken } = useContext(UserContext);
-    const [title, setTitle] = useState('');
+    const [todo, setTodo] = useState('');
     const [description, setDescription] = useState('');
     const queryClient = useQueryClient();
     const { status, error, mutate } = useMutation({
@@ -16,7 +16,7 @@ const AddTodoForm = () => {
     })
 
     const handleAddTodo = async () => {
-        mutate({ todo: title, description })
+        mutate({ todo, description })
     };
 
     return (
@@ -27,7 +27,7 @@ const AddTodoForm = () => {
                     type="text"
                     id="title"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => setTodo(e.target.value)}
                 />
             </div>
             <div>
