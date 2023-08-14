@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://interview.aval.dev/api';
+const BASE_URL = 'https://interview.aval.dev/api/todo-list';
 
 async function addTodo(title, description, token) {
     try {
-        const response = await axios.post(`${BASE_URL}/todo-list/add`, {
+        const response = await axios.post(`${BASE_URL}/add`, {
             todo: title,
             description,
         }, {
@@ -21,7 +21,7 @@ async function addTodo(title, description, token) {
 
 async function updateTodo(id, title, description, token) {
     try {
-        const response = await axios.put(`${BASE_URL}/todo-list/update/${id}`, {
+        const response = await axios.put(`${BASE_URL}/update/${id}`, {
             todo: title,
             description,
         }, {
@@ -37,7 +37,7 @@ async function updateTodo(id, title, description, token) {
 }
 async function getTodos(token) {
     try {
-        const response = await axios.get(`${BASE_URL}/todo-list/list`, {
+        const response = await axios.get(`${BASE_URL}/list`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -47,4 +47,16 @@ async function getTodos(token) {
         throw error;
     }
 }
-export { addTodo, updateTodo, getTodos };
+async function showTodo(todoId, token) {
+    try {
+        const response = await axios.get(`${BASE_URL}/show/${todoId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+export { addTodo, updateTodo, getTodos, showTodo };

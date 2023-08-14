@@ -1,27 +1,53 @@
-import React from 'react'
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import TodoButtons from '../components/Todo/TodoButtons';
+import { showTodo } from '../services/todoApi'; // Import the showTodo function
+import { UserContext } from '../contexts/userContext';
 
 const Todo = () => {
+    const { authToken } = useContext(UserContext);
+    const { todoId } = useParams();
+    const [todo, setTodo] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+        const fetchTodo = async () => {
+            try {
+                const todoInfo = await showTodo(todoId, authToken);
+                setTodo(todoInfo);
+            } catch (error) {
+                console.error('Error fetching todo:', error);
+                setIsLoading(false);
+                setTodo("empty")
+            }
+        };
+        fetchTodo();
+        setIsLoading(false);
+    }, [todoId, authToken]);
+
+    if (todo === "empty")
+        return (< h2 > this post does not exist</ h2>)
     return (
         <div>
             <div>
-                <div>
-                    <h1>title of to do</h1>
-                    <div>
-                        <button><TaskAltIcon /></button>
-                        <button><EditIcon /></button>
-                        <button><DeleteOutlineIcon /></button>
-                    </div>
-                </div>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus itaque assumenda, magni quaerat repellat dolorem nesciunt, laborum, consequatur illum totam architecto asperiores tempora vel iste deleniti esse laudantium molestiae ut!
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus itaque assumenda, magni quaerat repellat dolorem nesciunt, laborum, consequatur illum totam architecto asperiores tempora vel iste deleniti esse laudantium molestiae ut!
-                </p>
+                {!isLoading && todo ?
+                    <>
+                        <div>
+                            <h1>{todo && todo?.todo}</h1>
+                            <div>
+                                <TodoButtons todo={todo} />
+                            </div>
+                        </div>
+                        <p>
+                            {todo && todo?.description}
+                        </p>
+                    </>
+                    : <h2>Loading...</h2>
+                }
             </div>
-        </div>
-    )
-}
+        </div >
+    );
+};
 
-export default Todo
+export default Todo;

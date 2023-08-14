@@ -1,22 +1,24 @@
-import React from 'react'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import TodoButtons from "../Todo/TodoButtons"
 
-function TodoCard() {
+function TodoCard({ todo }) {
+    const navigate = useNavigate();
+
+    const handleCardClick = (e) => {
+        navigate(`/todo/${todo.id}`)
+    };
+
     return (
-        <div>
+        <div onClick={handleCardClick}>
             <div>
-                <h3>title</h3>
-                <p>description is shown here but the short edition</p>
+                <h3>{todo.todo}</h3>
             </div>
             <div>
-                <button><TaskAltIcon /></button>
-                <button><EditIcon /></button>
-                <button><DeleteOutlineIcon /></button>
+                <TodoButtons todo={todo} />
             </div>
         </div>
-    )
+    );
 }
 
-export default TodoCard
+export default TodoCard;

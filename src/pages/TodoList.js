@@ -12,6 +12,7 @@ function TodoList() {
         const fetchTodos = async () => {
             try {
                 const fetchedTodos = await getTodos(authToken);
+                console.log(fetchedTodos);
                 setTodos(fetchedTodos);
             } catch (error) {
                 console.error('Error fetching todos:', error);
@@ -19,7 +20,7 @@ function TodoList() {
         };
 
         fetchTodos();
-    }, []);
+    }, [authToken]);
     const renderTodos = () => {
         const todoList = todos?.map(todo => (
             <TodoCard key={todo.id} todo={todo} />
