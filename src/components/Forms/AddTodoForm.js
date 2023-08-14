@@ -11,7 +11,7 @@ const AddTodoForm = () => {
     const { status, error, mutate } = useMutation({
         mutationFn: addTodo,
         onSuccess: newTodo => {
-            queryClient.setQueriesData(["todos"], newTodo.id, authToken)
+            queryClient.setQueriesData(["todos"], parseInt(newTodo.id), authToken)
         }
     })
 
@@ -26,7 +26,7 @@ const AddTodoForm = () => {
                 <input
                     type="text"
                     id="title"
-                    value={title}
+                    value={todo}
                     onChange={(e) => setTodo(e.target.value)}
                 />
             </div>
