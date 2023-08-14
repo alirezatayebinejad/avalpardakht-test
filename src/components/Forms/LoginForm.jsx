@@ -79,7 +79,6 @@ function LoginForm() {
           Log In
         </button>
       </div>
-      <h1 className="text-3xl font-bold underline">sdfsddf</h1>
     </form>
   );
 }

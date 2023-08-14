@@ -23,7 +23,7 @@ const Todo = () => {
     }
 
     return (
-        <div className={styles.todo_container}>
+        <div className={styles.todo_container} style={todo.done ? { backgroundColor: "#9bffb0" } : {}} >
             <div className={styles.todo_header}>
                 <h1 className={styles.todo_title}>{todo && todo?.todo}</h1>
                 <TodoButtons todo={todo} />
