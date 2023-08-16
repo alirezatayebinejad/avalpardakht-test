@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { getAuthToken } from "../services/auth";
 
-const userToken = getAuthToken();
 const BASE_URL = 'https://interview.aval.dev/api/todo-list';
 
 async function addTodo(todo, description) {
+    const userToken = getAuthToken();
     try {
         const response = await axios.post(`${BASE_URL}/add`, {
             todo,
@@ -63,6 +63,8 @@ async function showTodo(todoId, token) {
 }
 
 async function updateDoneStatus(todoId, done, token) {
+    const userToken = getAuthToken();
+
     try {
         done === false ? done = 0 : done = true;
         const response = await axios.patch(`${BASE_URL}/change-done/${todoId}`, { done }, {
